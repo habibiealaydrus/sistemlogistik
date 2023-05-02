@@ -1,2 +1,2 @@
-Sistem Logistik Sederhana
+Sistem Logistik Sederhana mengggunakan laravel
 //on progress
