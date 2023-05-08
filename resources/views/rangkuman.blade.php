@@ -2,11 +2,17 @@
     <div class="col-lg-3 col-6">
         <!-- small box -->
         <div class="small-box bg-info">
-            <div class="inner">
-                <h3>{{ $reportpesanan->count() }}</h3>
-
-                <p>Permintaan Pengiriman</p>
-            </div>
+            @if ($reportpesanan->isEmpty())
+                <div class="inner">
+                    <h3>0</h3>
+                    <p>Permintaan Pengiriman</p>
+                </div>
+            @else
+                <div class="inner">
+                    <h3>{{ $reportpesanan->count() }}</h3>
+                    <p>Permintaan Pengiriman</p>
+                </div>
+            @endif
             <div class="icon">
                 <i class="fas fa-dolly-flatbed"></i>
             </div>
