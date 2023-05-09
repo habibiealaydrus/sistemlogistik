@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -9,6 +8,7 @@ use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\laporanController;
 use App\Http\Controllers\settingsController;
 use App\Http\Controllers\frontlineController;
+use App\Http\Controllers\warehouseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,11 +28,11 @@ Route::get('/', function () {
 // Route::get('/', []);
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\BerandaController::class, 'index'])->name('home');
 
 Route::middleware(['auth'])->group(function()
 {
@@ -71,6 +71,9 @@ Route::middleware(['auth'])->group(function()
     Route::get('/inputpengiriman', [frontlineController::class, 'inputpengiriman']);
     //script create input paket pengiriman
     Route::post('/createpengiriman', [frontlineController::class, 'createpengiriman']);
+
+    //script gudang
+    Route::get('/warehouse', [warehouseController::class, 'index']);
 
 
 
