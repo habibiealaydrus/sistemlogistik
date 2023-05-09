@@ -35,4 +35,13 @@ class datapengirimanpaket extends Model
     {
         return $this->belongsTo(statusKirim::class, 'statuskiriman', 'id');
     }
+    /**
+     * Get the jenisKirim that owns the datapengirimanpaket
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function HargaKirim(): BelongsTo
+    {
+        return $this->belongsTo(JenisPengiriman::class,'jeniskiriman', 'id');
+    }
 }

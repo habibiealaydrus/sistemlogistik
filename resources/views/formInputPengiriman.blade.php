@@ -80,15 +80,24 @@
                         <div class="input-group-prepend">
                             <label class="input-group-text" for="inputGroupSelect01">Jenis Kiriman</label>
                         </div>
-                        <select class="custom-select" id="hargaJenisKirim" name="jeniskiriman" oninput="hitungBiaya()">
+                        <select class="custom-select" name="jeniskiriman" id="jeniskirim" oninput="hargaJenis()"
+                            onchange="hitungBiaya()">
                             @foreach ($optionkirim as $jeniskirim)
-                                <option value="{{ $jeniskirim->harga }}">{{ $jeniskirim->name }} </option>
+                                <option value={{ $jeniskirim->id }}|{{ $jeniskirim->harga }}>
+                                    {{ $jeniskirim->name }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group">
+                        <label>Harga Pengiriman</label>
+                        <span class="d-flex justify-content-left mt-2">
+                            Rp.<input type="text" class="form-control" id="hargajenis" readonly
+                                onchange="hargaJenis()">
+                        </span>
+                    </div>
+                    <div class="form-group">
                         <label>Biaya Pengiriman</label>
-                        {{-- script biaya pengiriman --}}
                         <input type="number" class="form-control" id="jarak"
                             placeholder="masukan jarak (dalam km)" oninput="hitungBiaya()">
                         <span class="d-flex justify-content-left mt-2">
@@ -123,10 +132,18 @@
         return result;
     };
     nomor.value = makeid(20);
+</script>
+<script>
+    function hargaJenis() {
+        var getJenisKirim = document.getElementById('jeniskirim').value;
+        var getHargaKirim = getJenisKirim.split("|");
+        document.getElementById("hargajenis").value = getHargaKirim[1];
+
+    }
 
     function hitungBiaya() {
         var jarak = document.getElementById("jarak").value;
-        var hargaKirim = document.getElementById('hargaJenisKirim').value;
-        document.getElementById("kalkulasiBiaya").value = jarak * hargaKirim;
+        var hargajenis = document.getElementById("hargajenis").value;
+        document.getElementById("kalkulasiBiaya").value = jarak * hargajenis;
     }
 </script>
