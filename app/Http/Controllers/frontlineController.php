@@ -16,13 +16,9 @@ class frontlineController extends Controller
     {
         $datainput=datapengirimanpaket:: paginate(3);
         Paginator::useBootstrapFive();
+        $optionKirim=JenisPengiriman::all();
 
-        return view('frontline',['datainputpaket'=>$datainput]);
-    }
-    public function inputpengiriman()
-    {
-        $optionKirim= JenisPengiriman::all();
-        return view('/formInputPengiriman',['optionkirim'=>$optionKirim]);
+        return view('frontline',['datainputpaket'=>$datainput,'optionkirim'=>$optionKirim]);
     }
     public function createpengiriman(Request $request)
     {
@@ -33,5 +29,11 @@ class frontlineController extends Controller
             Session::flash('massage', 'Jenis Pengiriman bertambah');
         }
         return redirect('/frontline');
+    }
+    public function update(Request $request, $id)
+    {
+        $data = datapengirimanpaket::findOrFail($id);
+        $data ->update($request->all());
+        return redirect('/warehouse');
     }
 }
