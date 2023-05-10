@@ -19,6 +19,15 @@
                         </div>
                     </div>
                 </section>
+                @if (Session::has('status'))
+                    <div class="alert alert-{{ Session::get('button') }} alert-dismissible fade show" role="alert">
+                        <strong>{{ Session::get('massage') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </strong>
+                    </div>
+                @endif
                 <section class=" connectedSortable d-inline-flex p-2">
                     <div href="/inputpengiriman" class="card ml-3 p-3 col-md-4  bg-primary  rounded text-center "
                         id="card">
@@ -69,14 +78,18 @@
                                     <td>{{ $datainput->namapengirim }}</td>
                                     <td>{{ $datainput->statusPaket->statuskiriman }}</td>
                                     <td>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        <button type="button" class="btn btn-warning" data-toggle="modal"
                                             data-target="#ModalEditPesanan{{ $datainput->id }}">
                                             Edit
                                         </button>
-                                        <button class="btn btn-danger">Hapus</button>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal"
+                                            data-target="#modalHapusPaketKiriman{{ $datainput->id }}">
+                                            Hapus
+                                        </button>
                                     </td>
                                 </tr>
                                 @include('editInputPengiriman')
+                                @include('confirmdeletepaketkiriman')
                             @endforeach
 
                         </tbody>
