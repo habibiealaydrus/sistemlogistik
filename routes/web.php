@@ -71,6 +71,8 @@ Route::middleware(['auth'])->group(function()
     Route::get('/inputpengiriman', [frontlineController::class, 'inputpengiriman']);
     //script create input paket pengiriman
     Route::post('/createpengiriman', [frontlineController::class, 'createpengiriman']);
+    //script ubah data data paket
+    Route::put('/updatedatapaket/{id}', [frontlineController::class, 'update']);
 
     //script gudang
     Route::get('/warehouse', [warehouseController::class, 'index']);

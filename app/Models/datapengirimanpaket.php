@@ -40,7 +40,7 @@ class datapengirimanpaket extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function HargaKirim(): BelongsTo
+    public function NamaPaket(): BelongsTo
     {
         return $this->belongsTo(JenisPengiriman::class,'jeniskiriman', 'id');
     }

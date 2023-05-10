@@ -34,6 +34,6 @@ class frontlineController extends Controller
     {
         $data = datapengirimanpaket::findOrFail($id);
         $data ->update($request->all());
-        return redirect('/warehouse');
+        return redirect('/frontline');
     }
 }

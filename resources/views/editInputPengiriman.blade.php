@@ -1,20 +1,22 @@
 <!-- Modal -->
-<div class="modal fade" id="Modalinputpengiriman" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="ModalEditPesanan{{ $datainput->id }}" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Form Input Pesanan</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Form Edit Pesanan</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/createpengiriman" method="post">
+                <form action="/updatedatapaket/{{ $datainput->id }}" method="post">
+                    @method('PUT')
                     @csrf
                     <div class="form-group">
                         <label>Nomor Resi Pengiriman</label>
-                        <input type="text" class="form-control" autofocus name="nomor_resi" id="nomor" readonly>
+                        <input type="text" class="form-control" autofocus name="nomor_resi" id="nomor" readonly
+                            value="{{ $datainput->nomor_resi }}">
                         <small id="pengirimHelp" class="form-text text-muted">
                             No. Resi Pengiriman
                         </small>
@@ -22,7 +24,7 @@
                     <div class="form-group">
                         <label>Nama Pengirim</label>
                         <input type="text" class="form-control" autofocus name="namapengirim" id="namapengirim"
-                            placeholder="Nama Pengirim">
+                            placeholder="Nama Pengirim" value="{{ $datainput->namapengirim }}">
                         <small id="pengirimHelp" class="form-text text-muted">
                             Masukan Sesuai KTP
                         </small>
@@ -30,12 +32,12 @@
                     <div class="form-group">
                         <label>Alamat Pengirim</label>
                         <input type="text" class="form-control" name="alamatpengirim" id="alamatpengirim"
-                            placeholder="Alamat Pengirim">
+                            placeholder="Alamat Pengirim" value="{{ $datainput->alamatpengirim }}">
                     </div>
                     <div class="form-group">
                         <label>Kontak Pengirim</label>
                         <input type="tel" class="form-control" name="kontakpengirim" id="kontakpengirim"
-                            placeholder="0812-34567-890" pattern="[0-9]{4}-[0-9]{5}-[0-9]{3}" required>
+                            value="{{ $datainput->kontakpengirim }}" required>
                         <small id="penerimaHelp" class="form-text text-muted">
                             Format=0812-34567-890
                         </small>
@@ -43,7 +45,7 @@
                     <div class="form-group">
                         <label>Nama Penerima</label>
                         <input type="text" class="form-control" name="namapenerima" id="namapenerima"
-                            placeholder="Nama penerima">
+                            value="{{ $datainput->namapenerima }}">
                         <small id="penerimaHelp" class="form-text text-muted">
                             Masukan Sesuai KTP
                         </small>
@@ -51,12 +53,12 @@
                     <div class="form-group">
                         <label>Alamat Penerima</label>
                         <input type="text" class="form-control" name="alamatpenerima" id="alamatpenerima"
-                            placeholder="Alamat Penerima">
+                            value="{{ $datainput->alamatpenerima }}">
                     </div>
                     <div class="form-group">
                         <label>Kontak Penerima</label>
                         <input type="tel" class="form-control" name="kontakpenerima" id="kontakpenerima"
-                            placeholder="0812-34567-890" pattern="[0-9]{4}-[0-9]{5}-[0-9]{3}">
+                            value="{{ $datainput->kontakpenerima }}">
                         <small id="penerimaHelp" class="form-text text-muted">
                             Format=0812-34567-890
                         </small>
@@ -64,53 +66,17 @@
                     <div class="form-group">
                         <label>Berat Barang</label>
                         <input type="number" class="form-control" name="beratbarang" id="alamat"
-                            placeholder="Berat Paket">
+                            value="{{ $datainput->beratbarang }}">
                     </div>
                     <div class="form-group">
                         <label>Lebar Barang</label>
                         <input type="number" class="form-control" name="lebarbarang" id="lebar"
-                            placeholder="Lebar barang">
+                            placeholder="Lebar barang" value="{{ $datainput->lebarbarang }}">
                     </div>
                     <div class="form-group">
                         <label>Panjang Barang</label>
                         <input type="number" class="form-control" name="panjangbarang" id="panjang"
-                            placeholder="Panjang barang">
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" for="inputGroupSelect01">Jenis Kiriman</label>
-                        </div>
-                        <select class="custom-select" name="jeniskiriman" id="jeniskirim" oninput="hargaJenis()"
-                            onchange="hitungBiaya()">
-                            @foreach ($optionkirim as $jeniskirim)
-                                <option id="nilai" value={{ $jeniskirim->id }}
-                                    data-harga="{{ $jeniskirim->harga }}">
-                                    {{ $jeniskirim->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Harga Pengiriman</label>
-                        <span class="d-flex justify-content-left mt-2">
-                            Rp.<input type="text" class="form-control" id="hargajenis" readonly
-                                onchange="hargaJenis()">
-                        </span>
-                    </div>
-                    <div class="form-group">
-                        <label>Biaya Pengiriman</label>
-                        <input type="number" class="form-control" id="jarak"
-                            placeholder="masukan jarak (dalam km)" oninput="hitungBiaya()">
-                        <span class="d-flex justify-content-left mt-2">
-                            Rp.<input type="text" class="form-control" id="kalkulasiBiaya" name="biaya"
-                                readonly onchange="hitungBiaya()">
-                        </span>
-                    </div>
-                    <div class="form-group d-none">
-                        <label>Status Kiriman</label>
-                        {{-- script biaya pengiriman --}}
-                        <input type="number" class="form-control" id="jarak" value="2"
-                            name="statuskiriman">
+                            placeholder="Panjang barang" value="{{ $datainput->panjangbarang }}">
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
