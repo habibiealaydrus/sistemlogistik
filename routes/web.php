@@ -73,7 +73,11 @@ Route::middleware(['auth'])->group(function()
     Route::post('/createpengiriman', [frontlineController::class, 'createpengiriman']);
     //script ubah data data paket
     Route::put('/updatedatapaket/{id}', [frontlineController::class, 'update']);
+    //script hapus detail data paket
     Route::delete('/destroy/{id}', [frontlineController::class, 'destroy']);
+    //script laporan paket
+    Route::get('/laporanfrontline', [frontlineController::class, 'laporan']);
+    
 
     //script gudang
     Route::get('/warehouse', [warehouseController::class, 'index']);

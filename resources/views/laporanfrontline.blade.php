@@ -1,6 +1,6 @@
 @extends('layouts.masterdashboard')
 
-@section('title', 'FrontLine')
+@section('title', 'Laporan FrontLine')
 
 
 @section('content')
@@ -8,56 +8,46 @@
 
     @include('layouts/sidebar')
     <!-- Content Wrapper. Contains page content -->
+    {{-- {{ dd($jeniskiriman) }} --}}
     <div class="content-wrapper">
+        <section class="col-md-12 connectedSortable">
+            <div class="card">
+                <div class="card-header">
+                    <h1><strong> Laporan </strong>FrontLine</h1>
+                    <h5><a href="/frontline">Kembali</a></h5>
+
+                </div>
+
+            </div>
+        </section>
+
         <div class="container">
 
-            <div class="row mt-2 mb-2">
-
-                <section class="col-md-12 connectedSortable">
-                    <div class="card">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card card-success">
                         <div class="card-header">
-                            <h1>FrontLine</h1>
+                            <h3 class="card-title">Jenis pengiriman</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                </section>
-
-                <section class=" connectedSortable d-inline-flex p-2">
-                    <div href="/inputpengiriman" class="card ml-3 p-3 col-md-4  bg-primary  rounded text-center "
-                        id="card">
-                        <i class='fas fa-clipboard-list ' style='font-size:8rem'></i>
-                        <!-- Button trigger modal -->
                         <div class="card-body">
-                            <button type="button" class="btn btn-success" data-toggle="modal"
-                                data-target="#Modalinputpengiriman">
-                                Input Data Paket
-                            </button>
-                        </div>
-
-                    </div>
-                    <div class="card ml-3 p-3 col-md-4 bg-warning rounded text-center">
-                        <i class='fas fa-chart-pie' style='font-size:8rem'></i>
-                        <div class="card-body">
-                            <a href="/laporanfrontline" class="btn btn-success">Laporan</a>
+                            <div id="pie_chart"></div>
                         </div>
                     </div>
-                    <div class="card ml-3 p-3 col-md-4 bg-danger rounded text-center">
-                        <i class='fas fa-cog fa-spin' style='font-size:8rem'></i>
-                        <div class="card-body">
-                            <a href="/settingsfrontline" class="btn btn-success">Settings</a>
-                        </div>
-                    </div>
-                </section>
-            </div>
-            @if (Session::has('status'))
-                <div class="alert alert-{{ Session::get('button') }} alert-dismissible fade show" role="alert">
-                    <strong>{{ Session::get('massage') }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </strong>
                 </div>
-            @endif
-            @include('forminputPengiriman')
+                <div class="col-md-6">
+
+                </div>
+            </div>
+
+
             @if ($datainputpaket->isNotEmpty())
                 <div class="row mt-2 mb-2">
                     <table class="table">
@@ -108,5 +98,23 @@
             @endif
         </div>
     </div>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        var analytics = <?php echo $jeniskiriman; ?>
+
+        google.charts.load('current', {
+            'packages': ['corechart']
+        });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable(analytics);
+            var options = {
+                title: 'Jenis Pengiriman'
+            };
+            var chart = new google.visualization.PieChart(document.getElementById('pie_chart'));
+            chart.draw(data, options);
+        }
+    </script>
 
 @endsection
